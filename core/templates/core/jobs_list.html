@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+  <h1>Vagas</h1>
+  <ul>
+    {% for job in jobs %}
+      <li>
+        <a href="{% url 'job_detail' job.pk %}">{{ job.title }}</a>
+        - candidatos: {{ job.applicants_count }}
+      </li>
+    {% empty %}
+      <li>Sem vagas</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

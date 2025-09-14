@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% block content %}
+  <h1>{{ job.title }}</h1>
+  <p>Faixa salarial: {{ job.get_salary_range_display }}</p>
+  <p>Escolaridade mínima: {{ job.get_min_education_display }}</p>
+  <p>Requisitos: {{ job.requirements }}</p>
+  {% if user.is_authenticated and user.is_company and user == job.company %}
+    <p><a href="{% url 'job_edit' job.pk %}">Editar</a> | <a href="{% url 'job_delete' job.pk %}">Excluir</a></p>
+  {% endif %}
+
+  <h2>Candidatos ({{ job.applicants_count }})</h2>
+  <ul>
+    {% for app in applications %}
+      <li>
+        <strong>{{ app.candidate.email }}</strong> - Pretensão: R$ {{ app.salary_expectation }} - Escolaridade: {{ app.get_last_education_display }} - Score: {{ app.score }}
+        <div>Experiência: {{ app.experience }}</div>
+      </li>
+    {% empty %}
+      <li>Sem candidatos</li>
+    {% endfor %}
+  </ul>
+
+  {% if user.is_authenticated and not user.is_company %}
+    <a href="{% url 'apply_job' job.pk %}">Candidatar-se</a>
+  {% endif %}
+{% endblock %}

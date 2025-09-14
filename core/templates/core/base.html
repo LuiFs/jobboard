@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JobBoard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Vagas</a> |
+      <a href="/jobs/create/">Criar vaga</a> |
+      <a href="/reports/">Relatórios</a>
+      {% if user.is_authenticated %}
+        | {{ user.email }} (<a href="/accounts/logout/">Sair</a>)
+      {% else %}
+        | <a href="/accounts/login/">Login</a>
+      {% endif %}
+    </nav>
+    <hr>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
